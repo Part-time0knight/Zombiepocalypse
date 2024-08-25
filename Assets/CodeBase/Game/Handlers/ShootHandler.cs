@@ -1,6 +1,7 @@
 using Game.Misc;
 using Game.Projectiles;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -33,6 +34,7 @@ public class ShootHandler : IInitializable
     {
         _currentProjectile = _projectilePool.Spawn(_weaponPoint.position, target);
         _currentProjectile.InvokeHit += OnHit;
+        _currentProjectile.InvokeRemove += OnRemove;
         _settings.CanAttack = false;
         _timer.Initialize(_settings.CurrentAttackDelay,
             callback: () => _settings.CanAttack = true).Play();
@@ -41,6 +43,13 @@ public class ShootHandler : IInitializable
     protected virtual void OnHit(Projectile projectile, GameObject target)
     {
         projectile.InvokeHit -= OnHit;
+        OnRemove(projectile);
+    }
+
+    protected virtual void OnRemove(Projectile projectile)
+    {
+        projectile.InvokeRemove -= OnRemove;
+        _projectilePool.Despawn(projectile);
     }
 
     [Serializable]

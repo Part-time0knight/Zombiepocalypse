@@ -1,3 +1,4 @@
+using Game.Misc;
 using System;
 using UnityEngine;
 using Zenject;
@@ -6,9 +7,11 @@ namespace Game.Projectiles
 {
     public class Projectile : MonoBehaviour
     {
-        public Action<Projectile, GameObject> InvokeHit;
+        public event Action<Projectile, GameObject> InvokeHit;
+        public event Action<Projectile> InvokeRemove;
 
         protected ProjectileMoveHadler _moveHandler;
+        protected Timer _timer = new();
         protected Vector2 _direction;
 
         /// <param name="start">World space position</param>
@@ -17,6 +20,7 @@ namespace Game.Projectiles
         {
             transform.position = start;
             _direction = (target - start).normalized;
+            _timer.Initialize(time: 1f, callback: () => InvokeRemove?.Invoke(this)).Play();
         }
 
         protected virtual void OnHit(GameObject gameObject)
