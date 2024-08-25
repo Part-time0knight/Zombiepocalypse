@@ -2,6 +2,7 @@ using Core.Infrastructure.GameFsm;
 using Core.Infrastructure.GameFsm.States;
 using Game.StaticData;
 using UnityEngine;
+using static Game.Handlers.AnimationHandler;
 
 namespace Game.Player.Fsm.States
 {
@@ -9,18 +10,16 @@ namespace Game.Player.Fsm.States
     {
         private readonly PlayerInput _playerInput;
         private readonly PlayerMoveHandler _moveHandler;
-        private readonly Animator _animator;
-        private readonly SpriteRenderer _spriteRenderer;
+        private readonly PlayerAnimationHandler _animator;
 
         public Run(IGameStateMachine gameStateMachine,
             PlayerInput playerInput,
             PlayerMoveHandler moveHandler,
-            Animator animator, SpriteRenderer spriteRenderer) : base(gameStateMachine)
+            PlayerAnimationHandler animator) : base(gameStateMachine)
         {
             _playerInput = playerInput;
             _moveHandler = moveHandler;
             _animator = animator;
-            _spriteRenderer = spriteRenderer;
         }
 
         public void OnEnter()
@@ -45,7 +44,7 @@ namespace Game.Player.Fsm.States
                 return;
             }
             _moveHandler.Move(direction);
-            _spriteRenderer.flipX = Mathf.Sign(direction) < 0 ? true : false;
+            _animator.FlipImage(Mathf.Sign(direction) < 0 ? Flip.Left : Flip.Right);
         }
 
         private void OnAttack()

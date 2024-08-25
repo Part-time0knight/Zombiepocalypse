@@ -17,3 +17,9 @@ MonoBehaviour:
       <Speed>k__BackingField: 6
     Hits:
       <HitPoints>k__BackingField: 1
+    Shoot:
+      <AttackDelay>k__BackingField: 0.2
+      <Damage>k__BackingField: 1
+  _ProjectileSettings:
+    Move:
+      <Speed>k__BackingField: 20

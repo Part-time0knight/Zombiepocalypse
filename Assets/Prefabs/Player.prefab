@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3237442302985373870
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4964451758128462292}
+  m_Layer: 0
+  m_Name: WeaponPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4964451758128462292
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237442302985373870}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.843, y: 0.383, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3413220381223248813}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7851922090156418819
 GameObject:
   m_ObjectHideFlags: 0
@@ -47,6 +78,7 @@ MonoBehaviour:
   _settings:
     <RigidBody>k__BackingField: {fileID: 4616486095953041336}
     <Animator>k__BackingField: {fileID: 1237907698975721192}
+    <Weapon>k__BackingField: {fileID: 4964451758128462292}
     <Renderer>k__BackingField: {fileID: 5119370060129749687}
 --- !u!1 &7857236534416256590
 GameObject:
@@ -84,6 +116,7 @@ Transform:
   m_Children:
   - {fileID: 3517105115830194674}
   - {fileID: 1110314305703861215}
+  - {fileID: 4964451758128462292}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2389385483816495163

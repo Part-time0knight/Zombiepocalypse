@@ -9,24 +9,28 @@ namespace Game.Player.Fsm.States
     {
         private readonly PlayerInput _playerInput;
         private readonly Animator _animator;
+        private readonly PlayerShootHandler _shootHandler;
 
         public Attack(IGameStateMachine gameStateMachine,
             PlayerInput playerInput,
-            Animator animator) : base(gameStateMachine)
+            Animator animator, PlayerShootHandler shootHandler) : base(gameStateMachine)
         {
             _playerInput = playerInput;
             _animator = animator;
+            _shootHandler = shootHandler;
         }
 
         public void OnEnter()
         {
             _animator.Play(AnimationNames.Shoot);
             _playerInput.InvokeFireButtonUp += OnEndShoot;
+            _shootHandler.StartAutomatic();
         }
 
         public override void OnExit()
         {
             _playerInput.InvokeFireButtonUp -= OnEndShoot;
+            _shootHandler.StopAutomatic();
         }
 
         private void OnEndShoot()

@@ -8,9 +8,11 @@ namespace Game.Player.Fsm.States
     public class Idle : AbstractState, IState
     {
         private readonly PlayerInput _playerInput;
-        private readonly Animator _animator;
+        private readonly PlayerAnimationHandler _animator;
 
-        public Idle(IGameStateMachine gameStateMachine, PlayerInput playerInput, Animator animator) : base(gameStateMachine)
+        public Idle(IGameStateMachine gameStateMachine,
+            PlayerInput playerInput,
+            PlayerAnimationHandler animator) : base(gameStateMachine)
         {
             _playerInput = playerInput;
             _animator = animator;

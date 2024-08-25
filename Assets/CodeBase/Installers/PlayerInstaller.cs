@@ -31,9 +31,12 @@ namespace Installers
         {
             Container.BindInstance(_settings.RigidBody);
             Container.BindInstance(_settings.Animator);
+            Container.BindInstance(_settings.Weapon);
             Container.BindInstance(_settings.Renderer);
 
+            Container.BindInterfacesAndSelfTo<PlayerAnimationHandler>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerDamageHandler>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PlayerShootHandler>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerMoveHandler>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerInput>().AsSingle();
         }
@@ -43,7 +46,7 @@ namespace Installers
         {
             [field: SerializeField] public Rigidbody2D RigidBody { get; private set; }
             [field: SerializeField] public Animator Animator { get; private set; }
-
+            [field: SerializeField] public Transform Weapon { get; private set; }
             [field: SerializeField] public SpriteRenderer Renderer { get; private set; }
         }
     }
