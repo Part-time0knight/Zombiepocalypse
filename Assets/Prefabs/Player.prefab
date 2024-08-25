@@ -47,6 +47,7 @@ MonoBehaviour:
   _settings:
     <RigidBody>k__BackingField: {fileID: 4616486095953041336}
     <Animator>k__BackingField: {fileID: 1237907698975721192}
+    <Renderer>k__BackingField: {fileID: 5119370060129749687}
 --- !u!1 &7857236534416256590
 GameObject:
   m_ObjectHideFlags: 0
