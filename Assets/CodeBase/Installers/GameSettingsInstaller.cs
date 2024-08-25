@@ -1,3 +1,4 @@
+using Game.Enemy;
 using Game.Player;
 using Game.Projectiles;
 using System;
@@ -10,7 +11,8 @@ namespace Installers
     public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInstaller>
     {
         [SerializeField] private PlayerSettings _playerSettings;
-        [SerializeField] private ProjectileSettings _ProjectileSettings;
+        [SerializeField] private ProjectileSettings _projectileSettings;
+        [SerializeField] private EnemySettings _enemySettings;
 
         public override void InstallBindings()
         {
@@ -18,7 +20,10 @@ namespace Installers
             Container.BindInstance(_playerSettings.Hits);
             Container.BindInstance(_playerSettings.Shoot);
 
-            Container.BindInstance(_ProjectileSettings.Move);
+            Container.BindInstance(_projectileSettings.Move);
+
+            Container.BindInstance(_enemySettings.Move);
+            Container.BindInstance(_enemySettings.Hits);
         }
 
         [Serializable]
@@ -33,6 +38,13 @@ namespace Installers
         public class ProjectileSettings
         {
             public ProjectileMoveHadler.ProjectileSettings Move;
+        }
+
+        [Serializable]
+        public class EnemySettings
+        {
+            public EnemyDamageHandler.EnemySettings Hits;
+            public EnemyMoveHandler.EnemySettings Move;
         }
     }
 }
