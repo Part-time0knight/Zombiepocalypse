@@ -29,10 +29,10 @@ namespace Installers
 
         private void InstallComponents()
         {
-            Container.BindInstance(_settings.RigidBody);
-            Container.BindInstance(_settings.Animator);
-            Container.BindInstance(_settings.Weapon);
-            Container.BindInstance(_settings.Renderer);
+            Container.BindInstance(_settings.RigidBody).AsSingle();
+            Container.BindInstance(_settings.Animator).AsSingle();
+            Container.BindInstance(_settings.Weapon).AsSingle();
+            Container.BindInstance(_settings.Renderer).AsSingle();
 
             Container.BindInterfacesAndSelfTo<PlayerAnimationHandler>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlayerDamageHandler>().AsSingle();
