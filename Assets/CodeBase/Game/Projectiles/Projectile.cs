@@ -8,7 +8,6 @@ namespace Game.Projectiles
     public class Projectile : MonoBehaviour
     {
         public event Action<Projectile, GameObject> InvokeHit;
-        public event Action<Projectile> InvokeRemove;
 
         protected ProjectileMoveHadler _moveHandler;
         protected Timer _timer = new();
@@ -18,13 +17,16 @@ namespace Game.Projectiles
         /// <param name="target">World space position</param>
         protected virtual void Intialize(Vector2 start, Vector2 target)
         {
-            transform.position = start;
+             transform.position = start;
             _direction = (target - start).normalized;
-            _timer.Initialize(time: 1f, callback: () => InvokeRemove?.Invoke(this)).Play();
+            _timer.Initialize(time: 1f, callback: () => OnHit(null)).Play();
         }
 
         protected virtual void OnHit(GameObject gameObject)
-            =>InvokeHit?.Invoke(this, gameObject);
+        {
+            InvokeHit?.Invoke(this, gameObject);
+            _timer.Stop();
+        }
 
         [Inject]
         protected virtual void Construct(ProjectileMoveHadler move)

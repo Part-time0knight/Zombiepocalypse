@@ -46,6 +46,7 @@ namespace Game.Misc
         public void Stop()
         {
             _currentTime = 0;
+            _invokeComplite = null;
             _cts.Cancel();
         }
 

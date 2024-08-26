@@ -20,7 +20,7 @@ namespace Game.Player.Fsm.States
 
         public void OnEnter()
         {
-            _animator.Play(AnimationNames.Idle);
+            _animator.Play(AnimationsNames.Idle);
             _playerInput.InvokeHorizontal += OnMove;
             _playerInput.InvokeFireButtonDown += OnAttack;
         }

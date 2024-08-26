@@ -1,3 +1,4 @@
+using Game.Enemy;
 using Game.Projectiles;
 using System;
 using UnityEngine;
@@ -19,12 +20,14 @@ public class GameInstaller : MonoInstaller
             FromComponentInNewPrefab(_settings.Buffer).AsSingle();
         Container.BindMemoryPool<Projectile, Projectile.Pool>()
             .FromComponentInNewPrefab( _settings.ProjectilePrefab);
+        Container.BindMemoryPool<EnemyHandler, EnemyHandler.Pool>()
+            .FromComponentInNewPrefab(_settings.EnemyPrefab);
 
     }
 
     private void InstallServices()
     {
-
+        Container.BindInterfacesAndSelfTo<EnemySpawner>().AsSingle();
     }
 
 
@@ -33,5 +36,6 @@ public class GameInstaller : MonoInstaller
     {
         [field: SerializeField] public ProjectileBuffer Buffer { get; private set; }
         [field: SerializeField] public Projectile ProjectilePrefab { get; private set; }
+        [field: SerializeField] public EnemyHandler EnemyPrefab { get; private set; }
     }
 }

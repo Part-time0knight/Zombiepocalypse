@@ -22,7 +22,7 @@ namespace Game.Player.Fsm.States
 
         public void OnEnter()
         {
-            _animator.Play(AnimationNames.Shoot);
+            _animator.Play(AnimationsNames.Shoot);
             _playerInput.InvokeFireButtonUp += OnEndShoot;
             _shootHandler.StartAutomatic();
         }

@@ -1,5 +1,7 @@
+using Game.Enemy;
 using Game.Misc;
 using Game.Projectiles;
+using Game.StaticData;
 using System;
 using UnityEngine;
 using Zenject;
@@ -33,7 +35,6 @@ public class ShootHandler : IInitializable
     {
         _currentProjectile = _projectilePool.Spawn(_weaponPoint.position, target);
         _currentProjectile.InvokeHit += OnHit;
-        _currentProjectile.InvokeRemove += OnRemove;
         _settings.CanAttack = false;
         _timer.Initialize(_settings.CurrentAttackDelay,
             callback: () => _settings.CanAttack = true).Play();
@@ -42,13 +43,10 @@ public class ShootHandler : IInitializable
     protected virtual void OnHit(Projectile projectile, GameObject target)
     {
         projectile.InvokeHit -= OnHit;
-        OnRemove(projectile);
-    }
-
-    protected virtual void OnRemove(Projectile projectile)
-    {
-        projectile.InvokeRemove -= OnRemove;
         _projectilePool.Despawn(projectile);
+        if (!target || target.tag != TagsNames.Enemy)
+            return;
+        target.GetComponent<EnemyHandler>()?.TakeDamage(_settings.CurrentDamage);
     }
 
     [Serializable]
@@ -58,7 +56,7 @@ public class ShootHandler : IInitializable
         [field: SerializeField] public int Damage { get; private set; }
 
         public float CurrentAttackDelay { get; set; }
-        public float CurrentDamage { get; set; }
+        public int CurrentDamage { get; set; }
 
         public bool CanAttack { get; set; }
 

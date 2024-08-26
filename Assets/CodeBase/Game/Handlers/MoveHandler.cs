@@ -52,6 +52,16 @@ namespace Game.Handlers
         {
             [field: SerializeField] public float Speed { get; private set; }
             public float CurrentSpeed { get; set; }
+
+            public Settings() { }
+
+            public Settings(float speed)
+            { 
+                Speed = speed;
+                CurrentSpeed = speed;
+            }
+
+            public Settings(Settings settings) : this(settings.Speed) { }
         }
     }
 }

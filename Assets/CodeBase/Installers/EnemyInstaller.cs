@@ -20,6 +20,7 @@ namespace Installers
             Container.BindInstance(_settings.Animator).AsSingle();
             Container.BindInstance(_settings.SpriteRenderer).AsSingle();
 
+            Container.BindInterfacesAndSelfTo<EnemySettingsHandler>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnemyMoveHandler>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnemyDamageHandler>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnemyAnimation>().AsSingle();

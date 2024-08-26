@@ -12,19 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86a4ca250010624e8e4cacb3d70075e, type: 3}
   m_Name: GameSettingsInstaller
   m_EditorClassIdentifier: 
-  _playerSettings:
+  _player:
     Move:
       <Speed>k__BackingField: 6
     Hits:
       <HitPoints>k__BackingField: 1
     Shoot:
-      <AttackDelay>k__BackingField: 0.2
+      <AttackDelay>k__BackingField: 0.25
       <Damage>k__BackingField: 1
-  _projectileSettings:
+  _projectile:
     Move:
       <Speed>k__BackingField: 20
-  _enemySettings:
+  _enemy:
     Hits:
       <HitPoints>k__BackingField: 3
     Move:
-      <Speed>k__BackingField: 1
+      <Speed>k__BackingField: 2
+  _spawner:
+    Spawner:
+      <HorizontalPoints>k__BackingField: {x: -10, y: 10}
+      <Yposition>k__BackingField: -2.3
+      <SpawnDelay>k__BackingField: {x: 1, y: 10}

@@ -14,8 +14,8 @@ namespace Game.Enemy
         private float _direction;
 
         public EnemyMoveHandler(Rigidbody2D body,
-            EnemySettings settings,
-            PlayerMoveHandler.PlayerSettings playerSettings) : base(body, settings)
+            EnemySettingsHandler settings,
+            PlayerMoveHandler.PlayerSettings playerSettings) : base(body, settings.MoveSettings)
         {
             _playerSettings = playerSettings;
         }
@@ -27,8 +27,16 @@ namespace Game.Enemy
             InvokeMove?.Invoke(_direction);
         }
 
+        public void Reset(Vector2 spawn)
+        {
+            _body.position = spawn;
+        }
+
         [Serializable]
         public class EnemySettings : Settings
-        { }
+        {
+            public EnemySettings(EnemySettings enemySettings) : base(enemySettings) 
+            { }
+        }
     }
 }
