@@ -20,6 +20,7 @@ MonoBehaviour:
     Shoot:
       <AttackDelay>k__BackingField: 0.25
       <Damage>k__BackingField: 1
+      <Ammo>k__BackingField: 30
   _projectile:
     Move:
       <Speed>k__BackingField: 20

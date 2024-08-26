@@ -61,6 +61,9 @@ public class GameInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<AmmoCountsViewModel>()
             .AsSingle()
             .NonLazy();
+        Container.BindInterfacesAndSelfTo<GameOverViewModel>()
+            .AsSingle()
+            .NonLazy();
     }
 
 

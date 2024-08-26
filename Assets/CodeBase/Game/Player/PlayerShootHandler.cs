@@ -37,6 +37,11 @@ namespace Game.Player
             _animationHandler.InvokeFlip -= OnSpriteFlip;
         }
 
+        public void Reset()
+        {
+            _playerSettings.CurrentAmmo = _playerSettings.Ammo;
+        }
+
         public void StartAutomatic()
         {
             _breakAutomatic = false;

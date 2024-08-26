@@ -13,6 +13,11 @@ namespace Game.Player
             _playerSettings.CurrentPosition = _body.position;
         }
 
+        public void Reset()
+        {
+            _body.position = new(0f, _body.position.y);
+        }
+
         public override void Move(float direction)
         {
             base.Move(direction);

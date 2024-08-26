@@ -8,10 +8,11 @@ using Zenject;
 
 namespace Game.Enemy
 {
-    public class EnemySpawner : IInitializable
+    public class EnemySpawner
     {
         private readonly Timer _timer;
         private readonly EnemyHandler.Pool _pool;
+        private readonly List<EnemyHandler> _enemies;
         private readonly Settings _settings;
         private readonly List<EnemyHandler.EnemyPreset> _enemyPresets;
 
@@ -26,12 +27,8 @@ namespace Game.Enemy
             _pool = pool;
             _settings = settings;
             _timer = new Timer();
+            _enemies = new();
             _enemyPresets = enemyPresets;
-        }
-
-        public void Initialize()
-        {
-            BeginSpawn();
         }
 
         public void BeginSpawn()
@@ -43,6 +40,12 @@ namespace Game.Enemy
         public void StopSpawn()
         {
             _breakTimer = true;
+            foreach (var enemy in _enemies)
+            {
+                enemy.InvokeDeath -= OnDeath;
+                _pool.Despawn(enemy);
+            }
+            _enemies.Clear();
         }
 
         private async UniTask Repeater()
@@ -56,6 +59,7 @@ namespace Game.Enemy
                     _timer.Initialize(_delay).Play();
                     var enemy = _pool.Spawn(_spawnPosition, _enemyPresets[_settings.CurrentEnemyIndex]);
                     enemy.InvokeDeath += OnDeath;
+                    _enemies.Add(enemy);
                 }
             } while (!_breakTimer);
         }
@@ -63,6 +67,7 @@ namespace Game.Enemy
         private void OnDeath(EnemyHandler enemy)
         {
             enemy.InvokeDeath -= OnDeath;
+            _enemies.Remove(enemy);
             _pool.Despawn(enemy);
         }
 
