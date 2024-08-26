@@ -1,5 +1,9 @@
+using Core.MVVM.Windows;
+using Game.Domain.Factories;
 using Game.Enemy;
+using Game.Infrastructure;
 using Game.Projectiles;
+using Presentation.ViewModel;
 using System;
 using UnityEngine;
 using Zenject;
@@ -10,8 +14,17 @@ public class GameInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
+        InstallFactories();
         InstallPools();
         InstallServices();
+        InstallViewModels();
+    }
+
+    private void InstallFactories()
+    {
+        Container.BindInterfacesAndSelfTo<StatesFactory>()
+            .AsSingle()
+            .NonLazy();
     }
 
     private void InstallPools()
@@ -27,9 +40,27 @@ public class GameInstaller : MonoInstaller
 
     }
 
+
     private void InstallServices()
     {
-        Container.BindInterfacesAndSelfTo<EnemySpawner>().AsSingle();
+        Container.BindInterfacesAndSelfTo<EnemySpawner>()
+            .AsSingle()
+            .NonLazy();
+
+        Container.BindInterfacesAndSelfTo<GameFsm>()
+            .AsSingle()
+            .NonLazy();
+
+        Container.BindInterfacesAndSelfTo<WindowFsm>()
+            .AsSingle()
+            .NonLazy();
+    }
+
+    private void InstallViewModels()
+    {
+        Container.BindInterfacesAndSelfTo<AmmoCountsViewModel>()
+            .AsSingle()
+            .NonLazy();
     }
 
 

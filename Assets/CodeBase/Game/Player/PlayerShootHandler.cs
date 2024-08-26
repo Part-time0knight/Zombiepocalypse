@@ -11,6 +11,7 @@ namespace Game.Player
     {
         private readonly PlayerAnimationHandler _animationHandler;
         private readonly float _weaponPosition;
+        private readonly PlayerSettings _playerSettings;
 
         private float _normal = 1f;
         private bool _breakAutomatic;
@@ -21,6 +22,8 @@ namespace Game.Player
         {
             _weaponPosition = _weaponPoint.localPosition.x;
             _animationHandler = animation;
+            _playerSettings = settings;
+            _playerSettings.CurrentAmmo = _playerSettings.Ammo;
         }
 
         public override void Initialize()
@@ -50,6 +53,8 @@ namespace Game.Player
             var target = _weaponPoint.position;
             target.x += _normal;
             Shoot(target);
+            --_playerSettings.CurrentAmmo;
+            _playerSettings.InvokeShoot?.Invoke();
         }
 
         private async UniTask Repeater()
@@ -73,6 +78,11 @@ namespace Game.Player
 
         [Serializable]
         public class PlayerSettings : Settings
-        { }
+        {
+            public Action InvokeShoot;
+
+            [field: SerializeField] public int Ammo { get; private set; }
+            public int CurrentAmmo { get; set; }
+        }
     }
 }
