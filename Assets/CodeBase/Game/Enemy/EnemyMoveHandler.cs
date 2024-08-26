@@ -1,5 +1,6 @@
 using Game.Handlers;
 using Game.Player;
+using Game.StaticData;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,7 +50,14 @@ namespace Game.Enemy
             _body.transform.localPosition = Vector2.zero;
         }
 
-  
+        protected override float Collision(float direction)
+        {
+            _body.Cast(new Vector2(direction, 0), _filter, _hits, _settings.CurrentSpeed * Time.fixedDeltaTime * _collisionOffSet);
+            foreach (var hit in _hits)
+                if (hit.transform.tag != TagsNames.Border && hit.transform.tag != TagsNames.Player)
+                    direction = hit.normal.x != 0 ? 0 : direction;
+            return direction;
+        }
 
         [Serializable]
         public class EnemySettings : Settings
