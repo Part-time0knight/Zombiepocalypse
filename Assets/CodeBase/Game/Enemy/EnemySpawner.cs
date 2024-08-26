@@ -1,6 +1,8 @@
 using Cysharp.Threading.Tasks;
 using Game.Misc;
+using Installers;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -11,16 +13,20 @@ namespace Game.Enemy
         private readonly Timer _timer;
         private readonly EnemyHandler.Pool _pool;
         private readonly Settings _settings;
+        private readonly List<EnemyHandler.EnemyPreset> _enemyPresets;
 
         private bool _breakTimer;
         private Vector2 _spawnPosition;
         private float _delay;
 
-        public EnemySpawner(EnemyHandler.Pool pool, Settings settings)
+        public EnemySpawner(EnemyHandler.Pool pool, 
+            Settings settings,
+            List<EnemyHandler.EnemyPreset> enemyPresets)
         {
             _pool = pool;
             _settings = settings;
             _timer = new Timer();
+            _enemyPresets = enemyPresets;
         }
 
         public void Initialize()
@@ -48,7 +54,7 @@ namespace Game.Enemy
                 {
                     CalculatePosition();
                     _timer.Initialize(_delay).Play();
-                    var enemy = _pool.Spawn(_spawnPosition);
+                    var enemy = _pool.Spawn(_spawnPosition, _enemyPresets[_settings.CurrentEnemyIndex]);
                     enemy.InvokeDeath += OnDeath;
                 }
             } while (!_breakTimer);
@@ -68,6 +74,8 @@ namespace Game.Enemy
             _spawnPosition = new(x, _settings.Yposition);
 
             _delay = UnityEngine.Random.Range(_settings.SpawnDelay.x, _settings.SpawnDelay.y);
+
+            _settings.CurrentEnemyIndex = UnityEngine.Random.Range(0, _enemyPresets.Count);
         }
 
         [Serializable]
@@ -76,6 +84,9 @@ namespace Game.Enemy
             [field: SerializeField] public Vector2 HorizontalPoints { get; private set; }
             [field: SerializeField] public float Yposition { get; private set; }
             [field: SerializeField] public Vector2 SpawnDelay { get; private set; }
+            [field: SerializeField] public Vector2 DisposePoint { get; private set; }
+
+            public int CurrentEnemyIndex { get; set; }
         }
     }
 }

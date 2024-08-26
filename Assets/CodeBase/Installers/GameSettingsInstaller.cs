@@ -2,6 +2,7 @@ using Game.Enemy;
 using Game.Player;
 using Game.Projectiles;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -12,7 +13,7 @@ namespace Installers
     {
         [SerializeField] private PlayerSettings _player;
         [SerializeField] private ProjectileSettings _projectile;
-        [SerializeField] private EnemySettings _enemy;
+        [SerializeField] private EnemySettings _defoultEnemy;
         [SerializeField] private EnemySpawnerSettings _spawner;
 
         public override void InstallBindings()
@@ -23,9 +24,11 @@ namespace Installers
 
             Container.BindInstance(_projectile.Move).AsSingle();
 
-            Container.BindInstance(_enemy.Move).AsSingle();
-            Container.BindInstance(_enemy.Hits).AsSingle();
+            Container.BindInstance(_defoultEnemy.Hits).AsSingle();
+            Container.BindInstance(_defoultEnemy.Move).AsSingle();
+            Container.BindInstance(_defoultEnemy.Animation).AsSingle();
 
+            Container.BindInstance(_spawner.Presets.Presets).AsSingle();
             Container.BindInstance(_spawner.Spawner).AsSingle();
         }
 
@@ -48,12 +51,21 @@ namespace Installers
         {
             public EnemyDamageHandler.EnemySettings Hits;
             public EnemyMoveHandler.EnemySettings Move;
+            public EnemyAnimation.Settings Animation;
+        }
+
+        [Serializable]
+        public class EnemiesPresets
+        {
+            public List<EnemyHandler.EnemyPreset> Presets;
         }
 
         [Serializable]
         public class EnemySpawnerSettings
         {
             public EnemySpawner.Settings Spawner;
+
+            public EnemiesPresets Presets;
         }
     }
 }

@@ -52,8 +52,8 @@ public class ShootHandler : IInitializable
     [Serializable]
     public class Settings
     {
-        [field: SerializeField] public float AttackDelay { get; private set; }
-        [field: SerializeField] public int Damage { get; private set; }
+        [field: SerializeField] public float AttackDelay { get; protected set; }
+        [field: SerializeField] public int Damage { get; protected set; }
 
         public float CurrentAttackDelay { get; set; }
         public int CurrentDamage { get; set; }

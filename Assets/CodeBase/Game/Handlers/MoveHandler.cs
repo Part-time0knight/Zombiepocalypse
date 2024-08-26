@@ -50,7 +50,7 @@ namespace Game.Handlers
         [Serializable]
         public class Settings
         {
-            [field: SerializeField] public float Speed { get; private set; }
+            [field: SerializeField] public float Speed { get; protected set; }
             public float CurrentSpeed { get; set; }
 
             public Settings() { }

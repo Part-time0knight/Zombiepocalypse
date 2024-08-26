@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Handlers
@@ -23,7 +21,7 @@ namespace Game.Handlers
         [Serializable]
         public class Settings
         {
-            [field: SerializeField] public int HitPoints { get; private set; }
+            [field: SerializeField] public int HitPoints { get; protected set; }
 
             public int CurrentHitPoints { get; set; }
 

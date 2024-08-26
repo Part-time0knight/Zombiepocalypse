@@ -17,9 +17,11 @@ public class GameInstaller : MonoInstaller
     private void InstallPools()
     {
         Container.Bind<ProjectileBuffer>().
-            FromComponentInNewPrefab(_settings.Buffer).AsSingle();
+            FromComponentInNewPrefab(_settings.ProjectileBuffer).AsSingle();
         Container.BindMemoryPool<Projectile, Projectile.Pool>()
             .FromComponentInNewPrefab( _settings.ProjectilePrefab);
+        Container.Bind<EnemyBuffer>().
+            FromComponentInNewPrefab(_settings.EnemyBuffer).AsSingle();
         Container.BindMemoryPool<EnemyHandler, EnemyHandler.Pool>()
             .FromComponentInNewPrefab(_settings.EnemyPrefab);
 
@@ -34,8 +36,9 @@ public class GameInstaller : MonoInstaller
     [Serializable]
     public class Settings
     {
-        [field: SerializeField] public ProjectileBuffer Buffer { get; private set; }
+        [field: SerializeField] public ProjectileBuffer ProjectileBuffer { get; private set; }
         [field: SerializeField] public Projectile ProjectilePrefab { get; private set; }
+        [field: SerializeField] public EnemyBuffer EnemyBuffer { get; private set; }
         [field: SerializeField] public EnemyHandler EnemyPrefab { get; private set; }
     }
 }

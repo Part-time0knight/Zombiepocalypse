@@ -1,6 +1,8 @@
 using Game.Player;
+using Game.Projectiles;
 using Game.StaticData;
 using System;
+using UnityEditor.Presets;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +14,7 @@ namespace Game.Enemy
 
         private EnemyDamageHandler _damageHandler;
         private EnemyMoveHandler _moveHandler;
+        private EnemyAnimation _animation;
         private PlayerHandler _player;
 
         public void TakeDamage(int damage)
@@ -21,18 +24,27 @@ namespace Game.Enemy
 
         [Inject]
         private void Construct(EnemyDamageHandler damageHandler,
-            EnemyMoveHandler moveHandler, 
+            EnemyMoveHandler moveHandler,
+            EnemyAnimation animation,
             PlayerHandler player)
         {
             _damageHandler = damageHandler;
             _player = player;
             _moveHandler = moveHandler;
+            _animation = animation;
         }
 
-        private void Reinitialize(Vector2 spawn)
+        private void Reinitialize(Vector2 spawn, EnemyPreset preset)
         {
-            _damageHandler.Reset();
-            _moveHandler.Reset(spawn);
+            _moveHandler.Reset(preset, spawn);
+            _damageHandler.Reset(preset);
+            _animation.Reset(preset);
+        }
+
+        private void Despawn()
+        {
+            _animation.Disable();
+            _moveHandler.Disable();
         }
 
         private void Awake()
@@ -47,7 +59,6 @@ namespace Game.Enemy
 
         private void OnHitChange(int currentHits)
         {
-            Debug.Log(currentHits);
             if (currentHits <= 0)
                 InvokeDeath?.Invoke(this);
         }
@@ -59,13 +70,42 @@ namespace Game.Enemy
             _player.TakeDamage(damage: 1);
         }
 
-        public class Pool : MonoMemoryPool<Vector2, EnemyHandler>
+        public class Pool : MonoMemoryPool<Vector2, EnemyPreset, EnemyHandler>
         {
-            protected override void Reinitialize(Vector2 spawn, EnemyHandler item)
+            protected Transform _buffer;
+
+            [Inject]
+            private void Construct(EnemyBuffer buffer)
             {
-                base.Reinitialize(spawn, item);
-                item.Reinitialize(spawn);
+                _buffer = buffer.transform;
             }
+
+            protected override void OnCreated(EnemyHandler item)
+            {
+                item.transform.SetParent(_buffer);
+                item.Despawn();
+                base.OnCreated(item);
+            }
+
+            protected override void OnDespawned(EnemyHandler item)
+            {
+                base.OnDespawned(item);
+                item.Despawn();
+            }
+
+            protected override void Reinitialize(Vector2 spawn, EnemyPreset preset, EnemyHandler item)
+            {
+                base.Reinitialize(spawn, preset, item);
+                item.Reinitialize(spawn, preset);
+            }
+        }
+
+        [Serializable]
+        public class EnemyPreset
+        {
+            [field: SerializeField] public AnimationClip Clip { get; private set; }
+            [field: SerializeField] public int Hits { get; private set; }
+            [field: SerializeField] public float Speed { get; private set; }
         }
     }
 }

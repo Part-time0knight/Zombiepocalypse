@@ -7,7 +7,7 @@ namespace Game.Enemy
     {
         public Action<int> InvokeHitPointChange;
 
-        public EnemyDamageHandler(EnemySettingsHandler settings) : base(settings.DamageSettings)
+        public EnemyDamageHandler(EnemySettings settings) : base(new(settings))
         {
         }
 
@@ -17,9 +17,9 @@ namespace Game.Enemy
             InvokeHitPointChange?.Invoke(_settings.CurrentHitPoints);
         }
 
-        public void Reset()
+        public void Reset(EnemyHandler.EnemyPreset preset)
         {
-            _settings.CurrentHitPoints = _settings.HitPoints;
+            _settings.CurrentHitPoints = preset.Hits;
         }
 
         [Serializable]

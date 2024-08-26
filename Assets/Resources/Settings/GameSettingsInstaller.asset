@@ -23,13 +23,33 @@ MonoBehaviour:
   _projectile:
     Move:
       <Speed>k__BackingField: 20
-  _enemy:
+  _defoultEnemy:
     Hits:
       <HitPoints>k__BackingField: 3
     Move:
       <Speed>k__BackingField: 2
+    Animation:
+      <Clip>k__BackingField: {fileID: 7400000, guid: 46479dd54d5af584c9544dad233dce05, type: 2}
   _spawner:
     Spawner:
       <HorizontalPoints>k__BackingField: {x: -10, y: 10}
       <Yposition>k__BackingField: -2.3
       <SpawnDelay>k__BackingField: {x: 1, y: 10}
+      <DisposePoint>k__BackingField: {x: -20, y: -20}
+    Presets:
+      Presets:
+      - <Clip>k__BackingField: {fileID: 7400000, guid: 46479dd54d5af584c9544dad233dce05, type: 2}
+        <Hits>k__BackingField: 3
+        <Speed>k__BackingField: 2
+      - <Clip>k__BackingField: {fileID: 7400000, guid: be6c8c4e1be9c8f47ae9b3cc4bd60daa, type: 2}
+        <Hits>k__BackingField: 3
+        <Speed>k__BackingField: 1.5
+      - <Clip>k__BackingField: {fileID: 7400000, guid: 2476cfabb18c37240b9a754370b37c9d, type: 2}
+        <Hits>k__BackingField: 3
+        <Speed>k__BackingField: 2.5
+      - <Clip>k__BackingField: {fileID: 7400000, guid: d7291c2c436501d44bf52b0f7a440b4a, type: 2}
+        <Hits>k__BackingField: 3
+        <Speed>k__BackingField: 3
+      - <Clip>k__BackingField: {fileID: 7400000, guid: cbf38da7d07c2cc4aa98f36ce2ebf9ef, type: 2}
+        <Hits>k__BackingField: 3
+        <Speed>k__BackingField: 4

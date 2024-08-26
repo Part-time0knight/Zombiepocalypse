@@ -201,8 +201,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _settings:
-    <Buffer>k__BackingField: {fileID: 9043962873673648895, guid: ba38607185583134eb6e0033b946e38e, type: 3}
+    <ProjectileBuffer>k__BackingField: {fileID: 9043962873673648895, guid: ba38607185583134eb6e0033b946e38e, type: 3}
     <ProjectilePrefab>k__BackingField: {fileID: 5859497799752981301, guid: f2cdd771ae954204497968986fda8cb2, type: 3}
+    <EnemyBuffer>k__BackingField: {fileID: 1973121312107166284, guid: 23e0639c1ebf4d840ae4c69475fb9fbd, type: 3}
     <EnemyPrefab>k__BackingField: {fileID: 1687379855144470137, guid: 2283193a6cd320c4cbe10354a8068cdc, type: 3}
 --- !u!1 &1352333104
 GameObject:
