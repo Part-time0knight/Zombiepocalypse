@@ -10,6 +10,8 @@ namespace Game.Enemy
 {
     public class EnemySpawner
     {
+        public event Action<Vector2> InvokeDeath;
+
         private readonly Timer _timer;
         private readonly EnemyHandler.Pool _pool;
         private readonly List<EnemyHandler> _enemies;
@@ -66,6 +68,7 @@ namespace Game.Enemy
 
         private void OnDeath(EnemyHandler enemy)
         {
+            InvokeDeath?.Invoke(enemy.transform.position);
             enemy.InvokeDeath -= OnDeath;
             _enemies.Remove(enemy);
             _pool.Despawn(enemy);

@@ -18,7 +18,15 @@ namespace Game.Player
         private PlayerShootHandler.PlayerSettings _shootSettings;
         private IGameStateMachine _fsm;
 
-        public int Ammo => _shootSettings.CurrentAmmo;
+        public int Ammo 
+        {
+            get => _shootSettings.CurrentAmmo;
+            set 
+            { 
+                _shootSettings.CurrentAmmo = value;
+                InvokeShoot?.Invoke();
+            }
+        }
         public int Hits => _damageSettings.CurrentHitPoints;
 
         public void TakeDamage(int damage)

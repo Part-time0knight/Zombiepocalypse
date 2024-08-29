@@ -27,6 +27,7 @@ MonoBehaviour:
   _defoultEnemy:
     Hits:
       <HitPoints>k__BackingField: 1
+      PresetHits: 0
     Move:
       <Speed>k__BackingField: 1
     Animation:
@@ -54,3 +55,7 @@ MonoBehaviour:
       - <Clip>k__BackingField: {fileID: 7400000, guid: cbf38da7d07c2cc4aa98f36ce2ebf9ef, type: 2}
         <Hits>k__BackingField: 1
         <Speed>k__BackingField: 4
+  _item:
+    Ammo:
+      <Bonus>k__BackingField: {x: 1, y: 4}
+      <Chance>k__BackingField: 0.4

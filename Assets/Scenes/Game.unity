@@ -315,6 +315,8 @@ MonoBehaviour:
     <ProjectilePrefab>k__BackingField: {fileID: 5859497799752981301, guid: f2cdd771ae954204497968986fda8cb2, type: 3}
     <EnemyBuffer>k__BackingField: {fileID: 1973121312107166284, guid: 23e0639c1ebf4d840ae4c69475fb9fbd, type: 3}
     <EnemyPrefab>k__BackingField: {fileID: 1687379855144470137, guid: 2283193a6cd320c4cbe10354a8068cdc, type: 3}
+    <ItemsBuffer>k__BackingField: {fileID: 9103486890223899852, guid: 126c9d5af36675e4d9c630a4b658aa57, type: 3}
+    <ammoItemPrefab>k__BackingField: {fileID: 8858256837479902735, guid: 2ad293a1313462f4f9f95f7f3c4cd61c, type: 3}
 --- !u!1 &1146845476
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using Game.Enemy;
+using Game.Items;
 using Game.Player;
 using Game.Projectiles;
 using System;
@@ -15,6 +16,7 @@ namespace Installers
         [SerializeField] private ProjectileSettings _projectile;
         [SerializeField] private EnemySettings _defoultEnemy;
         [SerializeField] private EnemySpawnerSettings _spawner;
+        [SerializeField] private ItemSettings _item;
 
         public override void InstallBindings()
         {
@@ -27,6 +29,8 @@ namespace Installers
             Container.BindInstance(_defoultEnemy.Hits).AsSingle();
             Container.BindInstance(_defoultEnemy.Move).AsSingle();
             Container.BindInstance(_defoultEnemy.Animation).AsSingle();
+
+            Container.BindInstance(_item.Ammo).AsSingle();
 
             Container.BindInstance(_spawner.Presets.Presets).AsSingle();
             Container.BindInstance(_spawner.Spawner).AsSingle();
@@ -66,6 +70,12 @@ namespace Installers
             public EnemySpawner.Settings Spawner;
 
             public EnemiesPresets Presets;
+        }
+
+        [Serializable]
+        public class ItemSettings
+        {
+            public AmmoItemHandler.AmmoSettings Ammo;
         }
     }
 }
