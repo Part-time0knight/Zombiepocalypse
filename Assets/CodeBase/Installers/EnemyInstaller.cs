@@ -1,4 +1,5 @@
 using Game.Enemy;
+using Presentation.ViewModel;
 using System;
 using UnityEngine;
 using Zenject;
@@ -12,6 +13,8 @@ namespace Installers
         public override void InstallBindings()
         {
             InstallEnemyComponents();
+            InstallFsm();
+            InstallViewModels();
         }
 
         private void InstallEnemyComponents()
@@ -23,6 +26,16 @@ namespace Installers
             Container.BindInterfacesAndSelfTo<EnemyMoveHandler>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnemyDamageHandler>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnemyAnimation>().AsSingle();
+        }
+
+        private void InstallViewModels()
+        {
+            Container.BindInterfacesAndSelfTo<EnemyHealthViewModel>().AsSingle();
+        }
+
+        private void InstallFsm()
+        {
+            Container.BindInterfacesAndSelfTo<EnemyWindowFsm>().AsSingle();
         }
 
         [Serializable]

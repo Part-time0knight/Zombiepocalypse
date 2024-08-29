@@ -1,6 +1,7 @@
 using Game.Player;
 using Game.Projectiles;
 using Game.StaticData;
+using Presentation.View;
 using System;
 using UnityEditor.Presets;
 using UnityEngine;
@@ -12,9 +13,11 @@ namespace Game.Enemy
     {
         public event Action<EnemyHandler> InvokeDeath;
 
+        private EnemyDamageHandler.EnemySettings _healthSettings;
         private EnemyDamageHandler _damageHandler;
         private EnemyMoveHandler _moveHandler;
         private EnemyAnimation _animation;
+        private EnemyWindowFsm _windowFsm;
         private PlayerHandler _player;
 
         public void TakeDamage(int damage)
@@ -23,15 +26,19 @@ namespace Game.Enemy
         }
 
         [Inject]
-        private void Construct(EnemyDamageHandler damageHandler,
+        private void Construct(EnemyDamageHandler.EnemySettings healthSettings,
+            EnemyDamageHandler damageHandler,
             EnemyMoveHandler moveHandler,
             EnemyAnimation animation,
+            EnemyWindowFsm windowFsm,
             PlayerHandler player)
         {
+            _healthSettings = healthSettings;
             _damageHandler = damageHandler;
             _player = player;
             _moveHandler = moveHandler;
             _animation = animation;
+            _windowFsm = windowFsm;
         }
 
         private void Reinitialize(Vector2 spawn, EnemyPreset preset)
@@ -39,6 +46,7 @@ namespace Game.Enemy
             _moveHandler.Reset(preset, spawn);
             _damageHandler.Reset(preset);
             _animation.Reset(preset);
+            _windowFsm.OpenWindow(typeof(EnemyHealthView), inHistory: true);
         }
 
         private void Despawn()
@@ -60,7 +68,10 @@ namespace Game.Enemy
         private void OnHitChange(int currentHits)
         {
             if (currentHits <= 0)
+            {
                 InvokeDeath?.Invoke(this);
+                _windowFsm.CloseWindow();
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

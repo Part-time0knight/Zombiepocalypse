@@ -20,13 +20,18 @@ namespace Game.Enemy
         public void Reset(EnemyHandler.EnemyPreset preset)
         {
             _settings.CurrentHitPoints = preset.Hits;
+            (_settings as EnemySettings).PresetHits = preset.Hits;
         }
 
         [Serializable]
         public class EnemySettings : Settings
         {
+            public int PresetHits;
+
             public EnemySettings(EnemySettings settings) : base(settings)
-            { }
+            {
+                
+            }
         }
     }
 }
