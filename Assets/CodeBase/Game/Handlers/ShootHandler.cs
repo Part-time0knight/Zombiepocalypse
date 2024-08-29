@@ -44,7 +44,7 @@ public class ShootHandler : IInitializable
     {
         projectile.InvokeHit -= OnHit;
         _projectilePool.Despawn(projectile);
-        if (!target || target.tag != TagsNames.Enemy)
+        if (!target || target.tag != TagNames.Enemy)
             return;
         target.GetComponent<EnemyHandler>()?.TakeDamage(_settings.CurrentDamage);
     }

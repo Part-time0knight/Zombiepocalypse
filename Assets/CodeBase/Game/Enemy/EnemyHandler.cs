@@ -71,7 +71,7 @@ namespace Game.Enemy
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.transform.tag != TagsNames.Player)
+            if (collision.transform.tag != TagNames.Player)
                 return;
             _player.TakeDamage(damage: 1);
         }
