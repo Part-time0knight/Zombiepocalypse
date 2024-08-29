@@ -4,6 +4,7 @@ using Core.MVVM.Windows;
 using Game.Infrastructure.States;
 using Presentation.View;
 using System;
+using UnityEngine;
 
 namespace Presentation.ViewModel
 {
@@ -33,6 +34,11 @@ namespace Presentation.ViewModel
         public void Restart()
         {
             _gameStateMachine.Enter<Gameplay>();
+        }
+
+        public void Exit()
+        {
+            Application.Quit();
         }
     }
 }
