@@ -2,6 +2,7 @@ using Game.Items;
 using Game.Player;
 using Game.StaticData;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -37,6 +38,15 @@ namespace Game.Handlers
         {
             protected Transform _buffer;
 
+            protected readonly List<ItemHandler<TSettings>> _spawnedItems = new();
+
+            public void Reset()
+            {
+                Clear();
+                while (_spawnedItems.Count > 0)
+                    Despawn(_spawnedItems[0]);
+            }
+
             [Inject]
             private void Construct(ItemsBuffer buffer)
             {
@@ -56,11 +66,21 @@ namespace Game.Handlers
                 item.InvokeCollision += OnTake;
             }
 
-            private void OnTake(ItemHandler<TSettings> item)
+            protected override void OnSpawned(ItemHandler<TSettings> item)
             {
-                item.InvokeCollision -= OnTake;
-                Despawn(item);
+                base.OnSpawned(item);
+                _spawnedItems.Add(item);
             }
+
+            protected override void OnDespawned(ItemHandler<TSettings> item)
+            {
+                base.OnDespawned(item);
+                item.InvokeCollision -= OnTake;
+                _spawnedItems.Remove(item);
+            }
+
+            private void OnTake(ItemHandler<TSettings> item)
+                =>Despawn(item);
         }
 
         [Serializable]

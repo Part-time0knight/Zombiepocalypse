@@ -29,7 +29,10 @@ namespace Game.Items
             _enemySpawner.InvokeDeath -= Spawn;
         }
 
-
+        public void Reset()
+        {
+            _itemPool.Reset();
+        }
 
         private void Spawn(Vector2 position)
         {

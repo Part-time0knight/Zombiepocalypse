@@ -52,10 +52,10 @@ namespace Game.Enemy
 
         protected override float Collision(float direction)
         {
-            _body.Cast(new Vector2(direction, 0), _filter, _hits, _settings.CurrentSpeed * Time.fixedDeltaTime * _collisionOffSet);
+            /*_body.Cast(new Vector2(direction, 0), _filter, _hits, _settings.CurrentSpeed * Time.fixedDeltaTime * _collisionOffSet);
             foreach (var hit in _hits)
                 if (hit.transform.tag != TagNames.Border && hit.transform.tag != TagNames.Player)
-                    direction = hit.normal.x != 0 ? 0 : direction;
+                    direction = hit.normal.x != 0 ? 0 : direction;*/
             return direction;
         }
 

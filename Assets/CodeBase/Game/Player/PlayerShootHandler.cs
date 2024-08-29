@@ -42,6 +42,7 @@ namespace Game.Player
         public void Reset()
         {
             _playerSettings.CurrentAmmo = _playerSettings.Ammo;
+            InvokeShoot?.Invoke();
             ResetDelay();
         }
 
