@@ -28,7 +28,7 @@ public class ShootHandler : IInitializable
 
     public virtual void Initialize()
     {
-        _timer.Initialize(time: 0f, step: 0f).Play();
+        //_timer.Initialize(time: 0f, step: 0f).Play();
     }
 
     public virtual void Shoot(Vector2 target)

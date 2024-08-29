@@ -2,7 +2,6 @@ using Core.Infrastructure.GameFsm;
 using Core.Infrastructure.GameFsm.States;
 using Core.MVVM.Windows;
 using Game.Enemy;
-using Game.Player;
 using Presentation.View;
 
 namespace Game.Infrastructure.States

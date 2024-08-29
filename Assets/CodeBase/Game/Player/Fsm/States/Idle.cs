@@ -10,10 +10,11 @@ namespace Game.Player.Fsm.States
         private readonly PlayerAnimationHandler _animator;
 
         public Idle(IGameStateMachine gameStateMachine,
+            PlayerShootHandler shootHandler,
             PlayerDamageHandler.PlayerSettings damageSettings,
             PlayerShootHandler.PlayerSettings playerSettings,
             PlayerInput playerInput,
-            PlayerAnimationHandler animator) : base(gameStateMachine, damageSettings, playerSettings)
+            PlayerAnimationHandler animator) : base(gameStateMachine, shootHandler, damageSettings, playerSettings)
         {
             _playerInput = playerInput;
             _animator = animator;

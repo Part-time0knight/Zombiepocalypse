@@ -21,6 +21,7 @@ namespace Game.Infrastructure.States
         public void OnEnter()
         {
             _windowFsm.OpenWindow(typeof(GameOverView), inHistory: true);
+            _playerHandler.Death();
         }
 
         public override void OnExit()

@@ -13,11 +13,12 @@ namespace Game.Player.Fsm.States
         private readonly PlayerAnimationHandler _animator;
 
         public Run(IGameStateMachine gameStateMachine,
+            PlayerShootHandler shootHandler,
             PlayerDamageHandler.PlayerSettings damageSettings,
             PlayerShootHandler.PlayerSettings playerSettings,
             PlayerInput playerInput,
             PlayerMoveHandler moveHandler,
-            PlayerAnimationHandler animator) : base(gameStateMachine, damageSettings, playerSettings)
+            PlayerAnimationHandler animator) : base(gameStateMachine, shootHandler, damageSettings, playerSettings)
         {
             _playerInput = playerInput;
             _moveHandler = moveHandler;

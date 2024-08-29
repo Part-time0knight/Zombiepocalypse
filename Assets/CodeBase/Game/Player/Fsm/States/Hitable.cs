@@ -8,27 +8,30 @@ namespace Game.Player.Fsm.States
 {
     public abstract class Hitable : AbstractState, IState
     {
-        private PlayerDamageHandler.PlayerSettings _damageSettings;
-        private PlayerShootHandler.PlayerSettings _shootSettings;
+        private readonly PlayerDamageHandler.PlayerSettings _damageSettings;
+        private readonly PlayerShootHandler.PlayerSettings _shootSettings;
+        private readonly PlayerShootHandler _shootHandler;
 
         public Hitable(IGameStateMachine gameStateMachine,
+            PlayerShootHandler shootHandler,
             PlayerDamageHandler.PlayerSettings damageSettings,
             PlayerShootHandler.PlayerSettings shootSettings) : base(gameStateMachine)
         {
             _damageSettings = damageSettings;
             _shootSettings = shootSettings;
+            _shootHandler = shootHandler;
         }
 
         public virtual void OnEnter()
         {
             _damageSettings.InvokeHit += OnDeath;
-            _shootSettings.InvokeShoot += OnShoot;
+            _shootHandler.InvokeShoot += OnShoot;
         }
 
         public override void OnExit()
         {
             _damageSettings.InvokeHit -= OnDeath;
-            _shootSettings.InvokeShoot -= OnShoot;
+            _shootHandler.InvokeShoot -= OnShoot;
         }
 
         private void OnDeath()

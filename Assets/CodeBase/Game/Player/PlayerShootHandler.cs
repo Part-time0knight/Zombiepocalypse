@@ -9,6 +9,8 @@ namespace Game.Player
 {
     public class PlayerShootHandler : ShootHandler, IDisposable
     {
+        public event Action InvokeShoot;
+
         private readonly PlayerAnimationHandler _animationHandler;
         private readonly float _weaponPosition;
         private readonly PlayerSettings _playerSettings;
@@ -40,6 +42,7 @@ namespace Game.Player
         public void Reset()
         {
             _playerSettings.CurrentAmmo = _playerSettings.Ammo;
+            ResetDelay();
         }
 
         public void StartAutomatic()
@@ -59,7 +62,12 @@ namespace Game.Player
             target.x += _normal;
             Shoot(target);
             --_playerSettings.CurrentAmmo;
-            _playerSettings.InvokeShoot?.Invoke();
+            InvokeShoot?.Invoke();
+        }
+
+        private void ResetDelay()
+        {
+            _timer.Initialize(time: 0.5f).Play();
         }
 
         private async UniTask Repeater()
@@ -84,8 +92,6 @@ namespace Game.Player
         [Serializable]
         public class PlayerSettings : Settings
         {
-            public Action InvokeShoot;
-
             [field: SerializeField] public int Ammo { get; private set; }
             public int CurrentAmmo { get; set; }
         }

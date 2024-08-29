@@ -9,25 +9,25 @@ namespace Presentation.ViewModel
     public class AmmoCountsViewModel : AbstractViewModel
     {
         public event Action<int> InvokeUpdate;
-        private readonly PlayerShootHandler.PlayerSettings _playerSettings;
+        private readonly PlayerHandler _player;
 
         protected override Type Window => typeof(AmmoCountsView);
 
-        public AmmoCountsViewModel(IWindowFsm windowFsm, PlayerShootHandler.PlayerSettings playerSettings) : base(windowFsm)
+        public AmmoCountsViewModel(IWindowFsm windowFsm, PlayerHandler player) : base(windowFsm)
         {
-            _playerSettings = playerSettings;
+            _player = player;
         }
 
         protected override void HandleOpenedWindow(Type uiWindow)
         {
             base.HandleOpenedWindow(uiWindow);
-            _playerSettings.InvokeShoot += Update;
+            _player.InvokeShoot += Update;
         }
 
         protected override void HandleClosedWindow(Type uiWindow)
         {
             base.HandleClosedWindow(uiWindow);
-            _playerSettings.InvokeShoot -= Update;
+            _player.InvokeShoot -= Update;
         }
 
         public override void InvokeClose()
@@ -42,7 +42,7 @@ namespace Presentation.ViewModel
 
         private void Update()
         {
-            InvokeUpdate?.Invoke(_playerSettings.CurrentAmmo);
+            InvokeUpdate?.Invoke(_player.Ammo);
         }
     }
 }
