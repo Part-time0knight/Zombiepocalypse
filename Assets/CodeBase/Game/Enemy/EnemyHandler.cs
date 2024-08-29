@@ -1,9 +1,7 @@
 using Game.Player;
-using Game.Projectiles;
 using Game.StaticData;
 using Presentation.View;
 using System;
-using UnityEditor.Presets;
 using UnityEngine;
 using Zenject;
 
@@ -13,7 +11,6 @@ namespace Game.Enemy
     {
         public event Action<EnemyHandler> InvokeDeath;
 
-        private EnemyDamageHandler.EnemySettings _healthSettings;
         private EnemyDamageHandler _damageHandler;
         private EnemyMoveHandler _moveHandler;
         private EnemyAnimation _animation;
@@ -26,14 +23,12 @@ namespace Game.Enemy
         }
 
         [Inject]
-        private void Construct(EnemyDamageHandler.EnemySettings healthSettings,
-            EnemyDamageHandler damageHandler,
+        private void Construct(EnemyDamageHandler damageHandler,
             EnemyMoveHandler moveHandler,
             EnemyAnimation animation,
             EnemyWindowFsm windowFsm,
             PlayerHandler player)
         {
-            _healthSettings = healthSettings;
             _damageHandler = damageHandler;
             _player = player;
             _moveHandler = moveHandler;
@@ -65,9 +60,9 @@ namespace Game.Enemy
             _damageHandler.InvokeHitPointChange -= OnHitChange;
         }
 
-        private void OnHitChange(int currentHits)
+        private void OnHitChange()
         {
-            if (currentHits <= 0)
+            if (_damageHandler.CurrentHits <= 0)
             {
                 InvokeDeath?.Invoke(this);
                 _windowFsm.CloseWindow();

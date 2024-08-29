@@ -13,12 +13,11 @@ namespace Game.Player.Fsm.States
         private readonly PlayerAnimationHandler _animator;
 
         public Run(IGameStateMachine gameStateMachine,
-            PlayerShootHandler shootHandler,
             PlayerDamageHandler.PlayerSettings damageSettings,
-            PlayerShootHandler.PlayerSettings playerSettings,
+            PlayerHandler playerHandler,
             PlayerInput playerInput,
             PlayerMoveHandler moveHandler,
-            PlayerAnimationHandler animator) : base(gameStateMachine, shootHandler, damageSettings, playerSettings)
+            PlayerAnimationHandler animator) : base(gameStateMachine, damageSettings, playerHandler)
         {
             _playerInput = playerInput;
             _moveHandler = moveHandler;
@@ -35,6 +34,7 @@ namespace Game.Player.Fsm.States
 
         public override void OnExit()
         {
+            base.OnExit();
             _playerInput.InvokeHorizontal -= OnMove;
             _playerInput.InvokeFireButtonDown -= OnAttack;
             _moveHandler.Move(0);

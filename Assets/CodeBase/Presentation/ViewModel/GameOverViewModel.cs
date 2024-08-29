@@ -32,7 +32,7 @@ namespace Presentation.ViewModel
 
         public void Restart()
         {
-            _gameStateMachine.Enter<GameplayState>();
+            _gameStateMachine.Enter<Gameplay>();
         }
     }
 }

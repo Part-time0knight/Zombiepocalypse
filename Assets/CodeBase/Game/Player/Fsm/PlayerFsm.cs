@@ -14,7 +14,6 @@ namespace Game.Player.Fsm
         public void Initialize()
         {
             StateResolve();
-            Enter<Initialize>();
         }
 
         private void StateResolve()

@@ -2,6 +2,7 @@ using Core.Infrastructure.GameFsm.States;
 using Core.Infrastructure.GameFsm;
 using Core.MVVM.Windows;
 using Presentation.View;
+using Game.Player;
 
 namespace Game.Infrastructure.States
 {
@@ -18,7 +19,7 @@ namespace Game.Infrastructure.States
         public void OnEnter()
         {
             WindowsResolve();
-            GameStateMachine.Enter<GameplayState>();
+            GameStateMachine.Enter<Gameplay>();
         }
 
         public override void OnExit()

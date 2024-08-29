@@ -1,51 +1,34 @@
 using Core.Infrastructure.GameFsm;
 using Core.Infrastructure.GameFsm.States;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Game.Player.Fsm.States
 {
     public abstract class Hitable : AbstractState, IState
     {
         private readonly PlayerDamageHandler.PlayerSettings _damageSettings;
-        private readonly PlayerShootHandler.PlayerSettings _shootSettings;
-        private readonly PlayerShootHandler _shootHandler;
+        private readonly PlayerHandler _playerHandler;
 
         public Hitable(IGameStateMachine gameStateMachine,
-            PlayerShootHandler shootHandler,
             PlayerDamageHandler.PlayerSettings damageSettings,
-            PlayerShootHandler.PlayerSettings shootSettings) : base(gameStateMachine)
+            PlayerHandler playerHandler) : base(gameStateMachine)
         {
             _damageSettings = damageSettings;
-            _shootSettings = shootSettings;
-            _shootHandler = shootHandler;
+            _playerHandler = playerHandler;
         }
 
         public virtual void OnEnter()
         {
-            _damageSettings.InvokeHit += OnDeath;
-            _shootHandler.InvokeShoot += OnShoot;
+            _damageSettings.InvokeHit += OnHit;
         }
 
         public override void OnExit()
         {
-            _damageSettings.InvokeHit -= OnDeath;
-            _shootHandler.InvokeShoot -= OnShoot;
+            _damageSettings.InvokeHit -= OnHit;
         }
 
-        private void OnDeath()
+        private void OnHit()
         {
-            if (_damageSettings.CurrentHitPoints > 0)
-                return;
-            GameStateMachine.Enter<Dead>();
-        }
-
-        private void OnShoot()
-        {
-            if (_shootSettings.CurrentAmmo > 0)
-                return;
-            GameStateMachine.Enter<Dead>();
+            _playerHandler.Death();
         }
     }
 }

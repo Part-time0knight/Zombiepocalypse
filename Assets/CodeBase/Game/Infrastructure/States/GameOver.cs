@@ -6,12 +6,12 @@ using Presentation.View;
 
 namespace Game.Infrastructure.States
 {
-    public class GameOverState : AbstractState, IState
+    public class GameOver : AbstractState, IState
     {
         private readonly IWindowFsm _windowFsm;
         private readonly PlayerHandler _playerHandler;
 
-        public GameOverState(IGameStateMachine gameStateMachine,
+        public GameOver(IGameStateMachine gameStateMachine,
             IWindowFsm windowFsm, PlayerHandler playerHandler) : base(gameStateMachine)
         {
             _windowFsm = windowFsm;

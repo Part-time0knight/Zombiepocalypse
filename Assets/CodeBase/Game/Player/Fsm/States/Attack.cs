@@ -12,11 +12,11 @@ namespace Game.Player.Fsm.States
         private readonly PlayerShootHandler _shootHandler;
 
         public Attack(IGameStateMachine gameStateMachine,
+            PlayerDamageHandler.PlayerSettings damageSettings,
+            PlayerHandler playerHandler,
             PlayerShootHandler shootHandler,
-            PlayerDamageHandler.PlayerSettings damageSettings, 
-            PlayerShootHandler.PlayerSettings playerSettings,
             PlayerInput playerInput,
-            Animator animator) : base(gameStateMachine, shootHandler, damageSettings, playerSettings)
+            Animator animator) : base(gameStateMachine, damageSettings, playerHandler)
         {
             _playerInput = playerInput;
             _animator = animator;
@@ -33,6 +33,7 @@ namespace Game.Player.Fsm.States
 
         public override void OnExit()
         {
+            base.OnExit();
             _playerInput.InvokeFireButtonUp -= OnEndShoot;
             _shootHandler.StopAutomatic();
         }

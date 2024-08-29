@@ -10,28 +10,27 @@ namespace Game.Player
     public class PlayerHandler : MonoBehaviour
     {
         public event Action InvokeShoot;
+        public event Action InvokeHit;
 
         private PlayerDamageHandler _damageHandler;
-        private PlayerMoveHandler _moveHandler;
+        private PlayerDamageHandler.PlayerSettings _damageSettings;
         private PlayerShootHandler _shootHandler;
         private PlayerShootHandler.PlayerSettings _shootSettings;
         private IGameStateMachine _fsm;
 
         public int Ammo => _shootSettings.CurrentAmmo;
+        public int Hits => _damageSettings.CurrentHitPoints;
 
         public void TakeDamage(int damage)
         {
             _damageHandler.TakeDamage(damage);
-            Debug.Log("damage");
+            OnHit();
         }
 
         public void PlayerReset()
         {
             _fsm.Enter<Initialize>();
-            _damageHandler.Reset();
-            _moveHandler.Reset();
-            _shootHandler.Reset();
-            OnShoot();
+
         }
 
         public void Death()
@@ -42,23 +41,32 @@ namespace Game.Player
         [Inject]
         private void Construct(PlayerFsm fsm,
             PlayerDamageHandler damageHandler,
-            PlayerMoveHandler moveHandler,
             PlayerShootHandler shootHandler,
-            PlayerShootHandler.PlayerSettings shootSettings)
+            PlayerShootHandler.PlayerSettings shootSettings,
+            PlayerDamageHandler.PlayerSettings damageSettings)
         {
             _fsm = fsm;
             _damageHandler = damageHandler;
-            _moveHandler = moveHandler;
             _shootHandler = shootHandler;
             _shootSettings = shootSettings;
+            _damageSettings = damageSettings;
         }
 
         private void OnShoot()
             => InvokeShoot?.Invoke();
 
+        private void OnHit()
+            => InvokeHit?.Invoke();
+
         private void Awake()
         {
             _shootHandler.InvokeShoot += OnShoot;
+            
+        }
+
+        private void Start()
+        {
+            PlayerReset();
         }
 
         private void OnDestroy()

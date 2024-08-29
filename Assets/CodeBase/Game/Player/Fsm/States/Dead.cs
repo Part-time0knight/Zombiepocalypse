@@ -1,7 +1,6 @@
 using Core.Infrastructure.GameFsm;
 using Core.Infrastructure.GameFsm.States;
 using Game.Infrastructure;
-using Game.Infrastructure.States;
 using Game.StaticData;
 
 namespace Game.Player.Fsm.States
@@ -23,7 +22,6 @@ namespace Game.Player.Fsm.States
         public void OnEnter()
         {
             _animator.Play(AnimationsNames.Idle);
-            _sceneStateMachine.Enter<GameOverState>();
         }
 
         public override void OnExit()

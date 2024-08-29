@@ -5,7 +5,7 @@ namespace Game.Player
 {
     public class PlayerDamageHandler : DamageHandler
     {
-        public readonly PlayerSettings _playerSettings;
+        private readonly PlayerSettings _playerSettings;
 
         public PlayerDamageHandler(PlayerSettings settings) : base(settings)
         {

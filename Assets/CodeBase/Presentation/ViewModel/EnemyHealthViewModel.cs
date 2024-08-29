@@ -11,15 +11,12 @@ namespace Presentation.ViewModel
         public event Action<float> InvokeHits;
 
         private readonly EnemyDamageHandler _damageHandler;
-        private readonly EnemyDamageHandler.EnemySettings _settings;
 
         protected override Type Window => typeof(EnemyHealthView);
 
         public EnemyHealthViewModel(IWindowFsm windowFsm,
-            EnemyDamageHandler damageHandler,
-            EnemyDamageHandler.EnemySettings settings) : base(windowFsm)
+            EnemyDamageHandler damageHandler) : base(windowFsm)
         {
-            _settings = settings;
             _damageHandler = damageHandler;
         }
 
@@ -37,7 +34,7 @@ namespace Presentation.ViewModel
         {
             base.HandleOpenedWindow(uiWindow);
             _damageHandler.InvokeHitPointChange += Update;
-            Update(_settings.CurrentHitPoints);
+            Update();
         }
 
         protected override void HandleClosedWindow(Type uiWindow)
@@ -46,9 +43,9 @@ namespace Presentation.ViewModel
             _damageHandler.InvokeHitPointChange -= Update;
         }
 
-        private void Update(int hits)
+        private void Update()
         {
-            InvokeHits?.Invoke((float)hits / _settings.PresetHits);
+            InvokeHits?.Invoke((float)_damageHandler.CurrentHits / _damageHandler.Hits);
         }
     }
 }

@@ -1,5 +1,4 @@
 using Core.Infrastructure.GameFsm;
-using Core.Infrastructure.GameFsm.States;
 using Game.StaticData;
 
 namespace Game.Player.Fsm.States
@@ -10,11 +9,10 @@ namespace Game.Player.Fsm.States
         private readonly PlayerAnimationHandler _animator;
 
         public Idle(IGameStateMachine gameStateMachine,
-            PlayerShootHandler shootHandler,
             PlayerDamageHandler.PlayerSettings damageSettings,
-            PlayerShootHandler.PlayerSettings playerSettings,
+            PlayerHandler playerHandler,
             PlayerInput playerInput,
-            PlayerAnimationHandler animator) : base(gameStateMachine, shootHandler, damageSettings, playerSettings)
+            PlayerAnimationHandler animator) : base(gameStateMachine, damageSettings, playerHandler)
         {
             _playerInput = playerInput;
             _animator = animator;
@@ -30,6 +28,7 @@ namespace Game.Player.Fsm.States
 
         public override void OnExit()
         {
+            base.OnExit();
             _playerInput.InvokeHorizontal -= OnMove;
             _playerInput.InvokeFireButtonDown -= OnAttack;
         }

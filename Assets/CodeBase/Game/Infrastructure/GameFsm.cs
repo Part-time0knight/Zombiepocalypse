@@ -20,8 +20,8 @@ namespace Game.Infrastructure
         private void StateResolve()
         {
             _states.Add(typeof(GameInitialize), _factory.Create<GameInitialize>());
-            _states.Add(typeof(GameplayState), _factory.Create<GameplayState>());
-            _states.Add(typeof(GameOverState), _factory.Create<GameOverState>());
+            _states.Add(typeof(Gameplay), _factory.Create<Gameplay>());
+            _states.Add(typeof(GameOver), _factory.Create<GameOver>());
         }
     }
 }

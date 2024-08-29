@@ -525,4 +525,4 @@ MonoBehaviour:
   OnAnimationHide:
     m_PersistentCalls:
       m_Calls: []
-  _healthbarImage: {fileID: 0}
+  _healthbarImage: {fileID: 20447695187450314}

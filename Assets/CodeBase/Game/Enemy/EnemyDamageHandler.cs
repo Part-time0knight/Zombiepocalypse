@@ -5,22 +5,30 @@ namespace Game.Enemy
 {
     public class EnemyDamageHandler : DamageHandler
     {
-        public Action<int> InvokeHitPointChange;
+        public Action InvokeHitPointChange;
 
-        public EnemyDamageHandler(EnemySettings settings) : base(new(settings))
+        private EnemySettings _enemySettings;
+
+        public int CurrentHits => _enemySettings.CurrentHitPoints;
+        public int Hits => _enemySettings.PresetHits;
+
+        public EnemyDamageHandler(EnemySettings settings) : base(new EnemySettings(settings))
         {
+            _enemySettings = (EnemySettings)_settings;
+            
         }
 
         public override void TakeDamage(int damage)
         {
             base.TakeDamage(damage);
-            InvokeHitPointChange?.Invoke(_settings.CurrentHitPoints);
+            InvokeHitPointChange?.Invoke();
         }
 
         public void Reset(EnemyHandler.EnemyPreset preset)
         {
             _settings.CurrentHitPoints = preset.Hits;
-            (_settings as EnemySettings).PresetHits = preset.Hits;
+            _enemySettings.PresetHits = preset.Hits;
+            InvokeHitPointChange?.Invoke();
         }
 
         [Serializable]
